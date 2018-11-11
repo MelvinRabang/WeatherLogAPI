@@ -10,13 +10,14 @@ public class WeatherLogClientEntity {
 	@JsonProperty("weather")
 	private List<Weather> weather = new ArrayList<Weather>();
 
+	@JsonProperty("main")
+	private MainTemperature main;
+
 	public List<Weather> getWeather() {
 		return weather;
 	}
 
-	public void setWeather(List<Weather> weather) {
-		this.weather = weather;
+	public MainTemperature getMain() {
+		return main;
 	}
-
-	
 }
