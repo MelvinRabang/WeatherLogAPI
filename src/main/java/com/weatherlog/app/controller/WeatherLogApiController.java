@@ -2,12 +2,17 @@ package com.weatherlog.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.weatherlog.app.dto.WeatherLogDTO;
+import com.weatherlog.app.entity.WeatherLogClientEntity;
+import com.weatherlog.app.service.WeatherLogService;
 
 @CrossOrigin
 @RestController
@@ -16,7 +21,10 @@ public class WeatherLogApiController {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	 
+
+	@Autowired
+	private WeatherLogService weatherLogService;
+
 	@Value("${openWeatherMapClient.url}")
 	private String clientURL;
 	
@@ -27,9 +35,12 @@ public class WeatherLogApiController {
 	private final String AND_CHAR = "&";
 
 	@GetMapping()
-	String getURLAvailability(@RequestParam(name="location") String location) {
+	public WeatherLogDTO getURLAvailability(@RequestParam(name="location") String location) {
 		String finalUrl = extractClientUrl(location);
-		return restTemplate.getForObject(finalUrl, String.class);
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		WeatherLogClientEntity weatherLogClientEntity = restTemplate.getForObject(finalUrl, WeatherLogClientEntity.class);
+		WeatherLogDTO weatherLogDto = (WeatherLogDTO) weatherLogService.convertWeatherLogEntitytoDTO(weatherLogClientEntity);
+		return weatherLogDto;
 	}
 	
 	private String extractClientUrl(String location) {

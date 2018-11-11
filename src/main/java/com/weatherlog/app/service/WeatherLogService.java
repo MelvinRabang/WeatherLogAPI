@@ -1,5 +1,9 @@
 package com.weatherlog.app.service;
 
-public class WeatherLogService {
+import com.weatherlog.app.dto.WeatherLogDTO;
+import com.weatherlog.app.entity.WeatherLogClientEntity;
 
+public interface WeatherLogService {
+
+	public WeatherLogDTO convertWeatherLogEntitytoDTO(WeatherLogClientEntity weatherLogEntity);
 }
