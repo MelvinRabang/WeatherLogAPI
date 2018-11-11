@@ -29,7 +29,6 @@ public class WeatherLogApiController {
 	@GetMapping()
 	String getURLAvailability(@RequestParam(name="location") String location) {
 		String finalUrl = extractClientUrl(location);
-		System.out.println("finalUrl" + finalUrl);
 		return restTemplate.getForObject(finalUrl, String.class);
 	}
 	
