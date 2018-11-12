@@ -1,5 +1,7 @@
 package com.weatherlog.app.dto;
 
+import java.time.Instant;
+
 public class WeatherLogDTO {
 
 	private long id;
@@ -7,6 +9,7 @@ public class WeatherLogDTO {
 	private String location;
 	private String actualWeather;
 	private String temperature;
+	private Instant dtimeInserted;
 
 	public long getId() {
 		return id;
@@ -37,5 +40,11 @@ public class WeatherLogDTO {
 	}
 	public void setTemperature(String temperature) {
 		this.temperature = temperature;
+	}
+	public Instant getDtimeInserted() {
+		return dtimeInserted;
+	}
+	public void setDtimeInserted(Instant dtimeInserted) {
+		this.dtimeInserted = dtimeInserted;
 	}
 }
